@@ -1,147 +1,164 @@
 package moodleEditer;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 
-public class Missing  extends JPanel {
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+public class Missing extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
-	public Missing(){
-		JTextField textField;
+	private JPanel panel, panel_1, panel_2, panel_3;
+	JScrollPane scrPane;
+	private JTextField textField;
 
-		setLayout(new MigLayout("", "[116.00][30.00][90][135.00][50.00]", "[20][15][60.00,grow][15][20][20][20][20][20][15][20.00]"));
+	private ArrayList<JLabel> labelList = new ArrayList<JLabel>();
+	private ArrayList<JTextField> fieldList = new ArrayList<JTextField>();
+	private ArrayList<JCheckBox> chkList = new ArrayList<JCheckBox>();
+	private String [] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+			 			 "N", "O","P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+	
+	int x=1;
+
+	
+	public Missing() {
+
+		setLayout(new MigLayout("", "[right][grow][]", "[]10[150.00,top][40][50,grow][][40][40]"));
 		
-		JLabel lblNewLabel = new JLabel("Question Title (optional)");
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLabel lblNewLabel = new JLabel("Question Title (optional) ");
 		add(lblNewLabel, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
-		add(textField, "cell 2 0 3 1,growx");
+		add(textField, "cell 1 0 2 1,growx");
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("Question");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
-		add(lblNewLabel_1, "cell 0 2,alignx right,aligny top");
+		JLabel lblQuistion = new JLabel("Question");
+		add(lblQuistion, "cell 0 1,alignx right");
 		
-		JTextPane textPane_1 = new JTextPane();
-		add(textPane_1, "cell 2 2 3 1,grow");
+		JTextArea textArea = new JTextArea();
+		add(textArea, "cell 1 1 2 1,grow");
 		
-		JButton btnNewButton = new JButton("Cancel/Clear");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
-		btnNewButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(btnNewButton, "cell 4 3,growx,aligny top");
+		JLabel lblAnswer = new JLabel("Answer");
+		add(lblAnswer, "cell 0 3");
 		
-		JButton btnNewButton_2 = new JButton("Add New Missing Word Question");
-		btnNewButton_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		panel = new JPanel();
+		panel.setLayout(new MigLayout("", "[Fill][grow][right]", "[grow,center]"));
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(171, 173, 179)), "", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		
-		JButton btnNewButton_1 = new JButton("New Answer");
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		add(btnNewButton_1, "cell 0 4,growx");
-		
-		JLabel lblA = new JLabel("A");
-		add(lblA, "cell 1 4,alignx trailing");
-		
-		textField_1 = new JTextField();
-		add(textField_1, "cell 2 4 2 1,growx");
-		textField_1.setColumns(10);
-		
-		JRadioButton rdbtnCorrect = new JRadioButton("Correct");
-		add(rdbtnCorrect, "cell 4 4,alignx right");
-		
-		JButton button = new JButton("Remove Answer");
-		add(button, "cell 0 5,growx");
-		
-		JLabel lblB = new JLabel("B");
-		add(lblB, "cell 1 5,alignx trailing");
-		
-		textField_2 = new JTextField();
-		add(textField_2, "cell 2 5 2 1,growx");
-		textField_2.setColumns(10);
-		
-		JRadioButton radioButton = new JRadioButton("Correct");
-		add(radioButton, "cell 4 5,alignx right");
-		
-		JLabel lblC = new JLabel("C");
-		lblC.setEnabled(false);
-		add(lblC, "cell 1 6,alignx trailing");
-		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		add(textField_3, "cell 2 6 2 1,growx");
-		textField_3.setColumns(10);
-		
-		JRadioButton radioButton_1 = new JRadioButton("Correct");
-		radioButton_1.setEnabled(false);
-		add(radioButton_1, "cell 4 6,alignx right");
-		
-		JLabel lblD = new JLabel("D");
-		lblD.setEnabled(false);
-		add(lblD, "cell 1 7,alignx trailing");
-		
-		textField_4 = new JTextField();
-		textField_4.setEnabled(false);
-		add(textField_4, "cell 2 7 2 1,growx");
-		textField_4.setColumns(10);
-		
-		JButton btnNewButton_3 = new JButton("Save to test file");
-		btnNewButton_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
-		JRadioButton radioButton_2 = new JRadioButton("Correct");
-		radioButton_2.setEnabled(false);
-		add(radioButton_2, "cell 4 7,alignx right");
-		add(btnNewButton_3, "cell 0 8,growx");
-		add(btnNewButton_2, "cell 0 10 3 1");
+		scrPane = new JScrollPane(panel);
+		add(scrPane, "cell 1 3 2 1,grow");
 
+		panel_1 = new JPanel();		panel_1.setLayout(new GridLayout(x, 0, 0, 5));
+		panel_2 = new JPanel();		panel_2.setLayout(new GridLayout(x, 0, 0, 0));
+		panel_3 = new JPanel();		panel_3.setLayout(new GridLayout(x, 0, 0, 0));
+		
+		labelList.add(new JLabel(letters[x-1]));
+		fieldList.add(new JTextField());
+		chkList.add(new JCheckBox("Delete"));
+		
+		setAddAnswer(x);
+		
+		
+		panel.add(panel_1);
+		panel.add(panel_2, "growx,aligny top");
+		panel.add(panel_3);
+		
+		JButton button_3 = new JButton("Save to test file");
+		add(button_3, "cell 0 4,growx");
+		
+		JButton button = new JButton("Add Answer");
+		add(button, "cell 1 4");
+		
+		JButton button_1 = new JButton("Delete");
+		add(button_1, "cell 2 4");
+		
+		JButton button_2 = new JButton("Cancel/Clear");
+		button_2.setVerticalAlignment(SwingConstants.TOP);
+		button_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		add(button_2, "cell 2 2");
+		
+		JButton btnNewButton = new JButton("Add New Missing Word Question");
+		add(btnNewButton, "cell 0 6 2 1,alignx left");
+		btnNewButton.setVisible(false);
+		
+		
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				x++;
+				labelList.add(new JLabel(letters[x-1]));
+				fieldList.add(new JTextField());
+				chkList.add(new JCheckBox("Delete"));
+				setAddAnswer(x);				
+				scrPane.revalidate();
+			}
+		});
+		button_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				x--;
+				labelList.remove(x);
+				fieldList.remove(x);
+				chkList.remove(x);
+				setDelAnswer(x);				
+				scrPane.revalidate();
+			}
+		});
+		
+		setVisible(true);
 	}
-
+	
+	private void setAddAnswer(int i) {
+		
+		panel_1.setLayout(new GridLayout(i, 0, 0, 0));
+		panel_2.setLayout(new GridLayout(i, 0, 0, 0));
+		panel_3.setLayout(new GridLayout(i, 0, 0, 0));
+		
+		
+		for (int x = 0; x < i; x++) {
+			
+			panel_1.add(labelList.get(x));
+			panel_2.add(fieldList.get(x));
+			panel_3.add(chkList.get(x));
+			
+		}
+	}	
+	
+	private void setDelAnswer(int i) {
+			
+		panel_1.setLayout(new GridLayout(i, 0, 0, 0));
+		panel_2.setLayout(new GridLayout(i, 0, 0, 0));
+		panel_3.setLayout(new GridLayout(i, 0, 0, 0));
+			
+			
+		for (int x = 0; x < i; x++) {
+			
+			panel_1.add(labelList.get(x));
+			panel_2.add(fieldList.get(x));
+			panel_3.add(chkList.get(x));
+				
+		}		
+	}
 }
