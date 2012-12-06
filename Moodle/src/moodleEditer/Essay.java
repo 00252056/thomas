@@ -37,7 +37,7 @@ public class Essay extends JPanel {
 		add(textField, "cell 2 0 4 1,growx");
 		textField.setColumns(10);
 		
-		JButton btnNewButton_2 = new JButton("Add New Matching Question");
+		JButton btnNewButton_2 = new JButton("Add New Essay Question");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -75,7 +75,7 @@ public class Essay extends JPanel {
 		JScrollBar scrollBar = new JScrollBar();
 		add(scrollBar, "cell 5 4 1 3");
 		add(btnNewButton_3, "cell 0 7 2 1,growx");
-		add(btnNewButton_2, "cell 0 9 3 1,growx");
+		add(btnNewButton_2, "cell 0 9 3 1");
 
 	}
 

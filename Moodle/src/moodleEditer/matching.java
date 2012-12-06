@@ -32,7 +32,7 @@ public class matching extends JPanel {
 
 		JTextField textField;
 
-		setLayout(new MigLayout("", "[89.00][30.00][100,grow][30][100.00,grow][70.00]", "[20][15][20][20][20][20][][][20][15][20.00]"));
+		setLayout(new MigLayout("", "[89.00][30.00][100,grow][30][100.00,grow][70.00]", "[20][20][20][20][20][20][][20][20][15][20.00]"));
 		
 		JLabel lblNewLabel = new JLabel("Question Title (optional)");
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -60,7 +60,7 @@ public class matching extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 			}
 		});
-		add(btnNewButton_1, "cell 0 2");
+		add(btnNewButton_1, "cell 0 2,growx");
 		
 		JLabel lblA = new JLabel("A");
 		add(lblA, "cell 1 2,alignx trailing");
@@ -78,6 +78,9 @@ public class matching extends JPanel {
 		
 		JCheckBox chckbxDelete = new JCheckBox("Delete");
 		add(chckbxDelete, "cell 5 2");
+		
+		JButton btnRemoveQ = new JButton("Remove Q & A");
+		add(btnRemoveQ, "cell 0 3");
 		
 	
 		
@@ -158,7 +161,7 @@ public class matching extends JPanel {
 		JButton btnDelete = new JButton("Delete Selected");
 		add(btnDelete, "cell 4 6 2 1,alignx right");
 		add(btnNewButton_3, "cell 0 8 2 1,growx");
-		add(btnNewButton_2, "cell 0 10 3 1,growx");
+		add(btnNewButton_2, "cell 0 10 3 1");
 
 	}
 

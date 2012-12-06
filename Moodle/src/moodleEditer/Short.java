@@ -90,7 +90,7 @@ public class Short extends JPanel {
 		JCheckBox checkBox = new JCheckBox("New Line");
 		add(checkBox, "cell 5 6");
 		add(btnNewButton_3, "cell 0 7 2 1,growx");
-		add(btnNewButton_2, "cell 0 9 3 1,growx");
+		add(btnNewButton_2, "cell 0 9 3 1");
 
 	}
 

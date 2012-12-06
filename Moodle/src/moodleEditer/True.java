@@ -91,7 +91,7 @@ public class True extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		add(btnNewButton_2, "cell 0 5 2 1,growx");
+		add(btnNewButton_2, "cell 0 5 2 1");
 
 	}
 

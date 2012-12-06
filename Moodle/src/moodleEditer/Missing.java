@@ -2,23 +2,21 @@ package moodleEditer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JSpinner;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class Mult extends JPanel {
+public class Missing  extends JPanel {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -27,10 +25,10 @@ public class Mult extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Mult(){
+	public Missing(){
 		JTextField textField;
 
-		setLayout(new MigLayout("", "[140][30][90][122.00][70.00][30.00]", "[20][15][60.00,grow][15][20][20][20][20][20][15][20.00]"));
+		setLayout(new MigLayout("", "[116.00][30.00][90][135.00][50.00]", "[20][15][60.00,grow][15][20][20][20][20][20][15][20.00]"));
 		
 		JLabel lblNewLabel = new JLabel("Question Title (optional)");
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -38,7 +36,7 @@ public class Mult extends JPanel {
 		add(lblNewLabel, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
-		add(textField, "cell 2 0 4 1,growx");
+		add(textField, "cell 2 0 3 1,growx");
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Question");
@@ -47,7 +45,7 @@ public class Mult extends JPanel {
 		add(lblNewLabel_1, "cell 0 2,alignx right,aligny top");
 		
 		JTextPane textPane_1 = new JTextPane();
-		add(textPane_1, "cell 2 2 4 1,grow");
+		add(textPane_1, "cell 2 2 3 1,grow");
 		
 		JButton btnNewButton = new JButton("Cancel/Clear");
 		btnNewButton.addMouseListener(new MouseAdapter() {
@@ -61,9 +59,9 @@ public class Mult extends JPanel {
 		});
 		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
 		btnNewButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(btnNewButton, "cell 4 3 2 1,growx,aligny top");
+		add(btnNewButton, "cell 4 3,growx,aligny top");
 		
-		JButton btnNewButton_2 = new JButton("Add New Multple Choose Question");
+		JButton btnNewButton_2 = new JButton("Add New Missing Word Question");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -90,10 +88,7 @@ public class Mult extends JPanel {
 		textField_1.setColumns(10);
 		
 		JRadioButton rdbtnCorrect = new JRadioButton("Correct");
-		add(rdbtnCorrect, "cell 4 4");
-		
-		JSpinner spinner = new JSpinner();
-		add(spinner, "cell 5 4,alignx center");
+		add(rdbtnCorrect, "cell 4 4,alignx right");
 		
 		JButton button = new JButton("Remove Answer");
 		add(button, "cell 0 5,growx");
@@ -106,10 +101,7 @@ public class Mult extends JPanel {
 		textField_2.setColumns(10);
 		
 		JRadioButton radioButton = new JRadioButton("Correct");
-		add(radioButton, "cell 4 5");
-		
-		JSpinner spinner_1 = new JSpinner();
-		add(spinner_1, "cell 5 5,alignx center");
+		add(radioButton, "cell 4 5,alignx right");
 		
 		JLabel lblC = new JLabel("C");
 		lblC.setEnabled(false);
@@ -122,11 +114,7 @@ public class Mult extends JPanel {
 		
 		JRadioButton radioButton_1 = new JRadioButton("Correct");
 		radioButton_1.setEnabled(false);
-		add(radioButton_1, "cell 4 6");
-		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setEnabled(false);
-		add(spinner_2, "cell 5 6,alignx center");
+		add(radioButton_1, "cell 4 6,alignx right");
 		
 		JLabel lblD = new JLabel("D");
 		lblD.setEnabled(false);
@@ -150,11 +138,7 @@ public class Mult extends JPanel {
 		
 		JRadioButton radioButton_2 = new JRadioButton("Correct");
 		radioButton_2.setEnabled(false);
-		add(radioButton_2, "cell 4 7");
-		
-		JSpinner spinner_3 = new JSpinner();
-		spinner_3.setEnabled(false);
-		add(spinner_3, "cell 5 7,alignx center");
+		add(radioButton_2, "cell 4 7,alignx right");
 		add(btnNewButton_3, "cell 0 8,growx");
 		add(btnNewButton_2, "cell 0 10 3 1");
 
