@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -26,13 +30,12 @@ import net.miginfocom.swing.MigLayout;
 
 public class Missing extends JPanel {
 
-	private JPanel panel, panel_1, panel_2, panel_3;
+	private JPanel panel;
 	JScrollPane scrPane;
 	private JTextField textField;
-
-	private ArrayList<JLabel> labelList = new ArrayList<JLabel>();
-	private ArrayList<JTextField> fieldList = new ArrayList<JTextField>();
-	private ArrayList<JCheckBox> chkList = new ArrayList<JCheckBox>();
+	private String answer;
+	public static PrintWriter output;
+	private ArrayList<Answer> allAns = new ArrayList<Answer>();
 	private String [] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 			 			 "N", "O","P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 	
@@ -41,7 +44,7 @@ public class Missing extends JPanel {
 	
 	public Missing() {
 
-		setLayout(new MigLayout("", "[right][grow][]", "[]10[150.00,top][40][50,grow][][40][40]"));
+		setLayout(new MigLayout("", "[right][grow][]", "[]10[40.00,grow][40,grow][20][50,grow][][20][40]"));
 		
 		JLabel lblNewLabel = new JLabel("Question Title (optional) ");
 		add(lblNewLabel, "cell 0 0,alignx trailing");
@@ -50,115 +53,122 @@ public class Missing extends JPanel {
 		add(textField, "cell 1 0 2 1,growx");
 		textField.setColumns(10);
 		
-		JLabel lblQuistion = new JLabel("Question");
-		add(lblQuistion, "cell 0 1,alignx right");
+		JLabel lblQuistion = new JLabel("Question Start");
+		add(lblQuistion, "cell 0 1,alignx right,aligny top");
 		
-		JTextArea textArea = new JTextArea();
-		add(textArea, "cell 1 1 2 1,grow");
+		final JTextArea taStart = new JTextArea();
+		add(taStart, "cell 1 1 2 1,grow");
 		
-		JLabel lblAnswer = new JLabel("Answer");
-		add(lblAnswer, "cell 0 3");
+		JLabel lblQuestionEnd = new JLabel("Question End");
+		add(lblQuestionEnd, "cell 0 2,aligny top");
+		
+		final JTextArea taClose = new JTextArea();
+		add(taClose, "cell 1 2 2 1,grow");
+		
+		JLabel lblAnswer = new JLabel("Options");
+		add(lblAnswer, "cell 0 4");
 		
 		panel = new JPanel();
-		panel.setLayout(new MigLayout("", "[Fill][grow][right]", "[grow,center]"));
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(171, 173, 179)), "", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel.setLayout(new MigLayout("", "[grow,fill]", "[grow,fill]"));
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(171, 173, 179)), "", 
+				TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		
 		scrPane = new JScrollPane(panel);
-		add(scrPane, "cell 1 3 2 1,grow");
-
-		panel_1 = new JPanel();		panel_1.setLayout(new GridLayout(x, 0, 0, 5));
-		panel_2 = new JPanel();		panel_2.setLayout(new GridLayout(x, 0, 0, 0));
-		panel_3 = new JPanel();		panel_3.setLayout(new GridLayout(x, 0, 0, 0));
-		
-		labelList.add(new JLabel(letters[x-1]));
-		fieldList.add(new JTextField());
-		chkList.add(new JCheckBox("Delete"));
-		
-		setAddAnswer(x);
+		add(scrPane, "cell 1 4 2 1,grow");
 		
 		
-		panel.add(panel_1);
-		panel.add(panel_2, "growx,aligny top");
-		panel.add(panel_3);
+		JButton saveBtn = new JButton("Save to test file");
+		add(saveBtn, "cell 0 5,growx");
 		
-		JButton button_3 = new JButton("Save to test file");
-		add(button_3, "cell 0 4,growx");
+		JButton addBtn = new JButton("Add Option");
+		add(addBtn, "cell 1 5");
 		
-		JButton button = new JButton("Add Answer");
-		add(button, "cell 1 4");
-		
-		JButton button_1 = new JButton("Delete");
-		add(button_1, "cell 2 4");
+		JButton removeAnsBtn = new JButton("Delete");
+		add(removeAnsBtn, "cell 2 5");
 		
 		JButton button_2 = new JButton("Cancel/Clear");
 		button_2.setVerticalAlignment(SwingConstants.TOP);
 		button_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(button_2, "cell 2 2");
+		add(button_2, "cell 2 3");
 		
-		JButton btnNewButton = new JButton("Add New Missing Word Question");
-		add(btnNewButton, "cell 0 6 2 1,alignx left");
+		final JButton btnNewButton = new JButton("Add New Missing Word Question");
+		add(btnNewButton, "cell 0 7 2 1,alignx left");
 		btnNewButton.setVisible(false);
-		
-		
-		button.addActionListener(new ActionListener() {
+				
+		addBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
+				Answer ans = new Answer();
+				ans.getLblName().setText(letters[x-1]);
+				allAns.add(ans);	
+				displayAns();
+				scrPane.revalidate();
 				x++;
-				labelList.add(new JLabel(letters[x-1]));
-				fieldList.add(new JTextField());
-				chkList.add(new JCheckBox("Delete"));
-				setAddAnswer(x);				
-				scrPane.revalidate();
 			}
 		});
-		button_1.addActionListener(new ActionListener() {
+		removeAnsBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				x--;
-				labelList.remove(x);
-				fieldList.remove(x);
-				chkList.remove(x);
-				setDelAnswer(x);				
+				int index = -1;	
+				for(Answer a: allAns ){
+					if(a.getCbName().isSelected())
+					{
+						index = allAns.indexOf(a);
+					}
+				}
+				allAns.remove(index);	
+				displayAns();
 				scrPane.revalidate();
 			}
-		});
+		});	
 		
+		saveBtn.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			btnNewButton.setVisible(true);
+			String qusetionTitle = textField.getText();
+			String qusetionQ =  taStart.getText();
+			String endQ = taClose.getText();
+			String middle = "_________";
+
+			try {
+				output = new PrintWriter(new BufferedWriter(new FileWriter(
+						"ExamTest.txt", true)));
+
+				output.append("::" + qusetionTitle + "::" + qusetionQ + " {");
+//				for (int x = 0; x < blankFields.size(); x++) {
+//					if(correctFields.get(x).isSelected()){
+//						blanksQuestion += (" =" + blankFields.get(x).getText());
+//					}else{
+//						blanksQuestion += (" ~" + blankFields.get(x).getText());
+//					}
+//				}
+//				blanksQuestion += ("} " + qEnd);
+				output.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+			}
+		});
 		setVisible(true);
 	}
 	
-	private void setAddAnswer(int i) {
+	protected void displayAns() {
 		
-		panel_1.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_2.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_3.setLayout(new GridLayout(i, 0, 0, 0));
-		
-		
-		for (int x = 0; x < i; x++) {
-			
-			panel_1.add(labelList.get(x));
-			panel_2.add(fieldList.get(x));
-			panel_3.add(chkList.get(x));
-			
+		panel.removeAll();
+		int i = 0;
+		for(Answer a: allAns ){
+			a.getLblName().setText(letters[i]);
+			i++;
 		}
-	}	
-	
-	private void setDelAnswer(int i) {
-			
-		panel_1.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_2.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_3.setLayout(new GridLayout(i, 0, 0, 0));
-			
-			
-		for (int x = 0; x < i; x++) {
-			
-			panel_1.add(labelList.get(x));
-			panel_2.add(fieldList.get(x));
-			panel_3.add(chkList.get(x));
-				
-		}		
+		for(Answer a: allAns ){
+			panel.add(a,"wrap");
+		}
+		
 	}
 }

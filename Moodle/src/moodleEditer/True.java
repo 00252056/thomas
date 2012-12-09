@@ -23,29 +23,34 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class True extends JPanel {
-	private JTextField textField;
-	private char answer;
+	
+	private GiftBuilder localBuilder;
+	private JTextField qusetionTitle;
+	private String answer;
 	public static PrintWriter output;
 
-	public True() {
+	public True(GiftBuilder editor) {
+		
+		this.localBuilder = editor;
 		setLayout(new MigLayout("", "[140][180][40.00,grow][140]", "[20][15][85.00,grow][40][15][20.00]"));
+
 		
 		JLabel lblNewLabel = new JLabel("Question Title (optional)");
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblNewLabel, "cell 0 0,alignx trailing");
 		
-		textField = new JTextField();
-		add(textField, "cell 1 0 3 1,growx");
-		textField.setColumns(10);
+		qusetionTitle = new JTextField();
+		add(qusetionTitle, "cell 1 0 3 1,growx");
+		qusetionTitle.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Question");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
 		add(lblNewLabel_1, "cell 0 2,alignx right,aligny top");
 		
-		final JTextPane textPane_1 = new JTextPane();
-		add(textPane_1, "cell 1 2 3 1,grow");
+		final JTextPane qusetionQ = new JTextPane();
+		add(qusetionQ, "cell 1 2 3 1,grow");
 				
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Correct Answer", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -53,13 +58,11 @@ public class True extends JPanel {
 		panel.setLayout(new MigLayout("", "[110][110]", "[40]"));
 		
 		JRadioButton rdbtnFalse = new JRadioButton("False");
-		JRadioButton rdbtnTrue = new JRadioButton("True");
+		final JRadioButton rdbtnTrue = new JRadioButton("True");
 		
 		panel.add(rdbtnTrue, "cell 0 0,alignx right,aligny bottom");
 		panel.add(rdbtnFalse, "cell 1 0,alignx left,aligny bottom");
-		
-		rdbtnFalse.addActionListener(new Ans());
-		rdbtnTrue.addActionListener(new Ans());
+
 		
 		final ButtonGroup rbg = new ButtonGroup();
 		rbg.add(rdbtnTrue);
@@ -80,21 +83,17 @@ public class True extends JPanel {
 		btnNewButton_3.addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			btnNewButton_2.setVisible(true);
-			String qusetionTitle = textField.getText();
-			String qusetionQ = textPane_1.getText();
-
-			try {
-				output = new PrintWriter(new BufferedWriter(new FileWriter(
-						"ExamTest.txt", true)));
-
-				output.append("::" + qusetionTitle + "::" + qusetionQ + " {"
-						+ answer + "}" + "\n");
-				output.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			
+				btnNewButton_2.setVisible(true);
+				String qt = qusetionTitle.getText();
+				String qb = qusetionQ.getText();
+				if(rdbtnTrue .isSelected() == true){
+					answer = "T";
+				}else{
+					answer = "F";
 				}
+				String error = localBuilder.falseTrue(qt,qb,answer);
+				System.out.println(" "+error);
 			}
 		});
 		
@@ -103,8 +102,8 @@ public class True extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				textField.setText("");
-				textPane_1.setText("");
+				qusetionTitle.setText("");
+				qusetionQ.setText("");
 				rbg.clearSelection();
 				btnNewButton_2.setVisible(false);
 					
@@ -115,24 +114,12 @@ public class True extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				textField.setText("");
-				textPane_1.setText("");
+				qusetionTitle.setText("");
+				qusetionQ.setText("");
 				rbg.clearSelection();
 					
 			}
 		});
-	}
-	
-	public class Ans implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (e.getActionCommand() == "True") {
-				answer = 'T';
-
-			} else
-				answer = 'F';
-
-		}
-
 	}
 
 }

@@ -8,6 +8,8 @@ public class Main {
 
 		
 
+	private static final GiftBuilder GiftBuilder = null;
+
 	public static void main(String[] a) {
 	    JFrame f = new JFrame("Gift Editor");
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -16,7 +18,7 @@ public class Main {
 	    jtp.addTab("Missing Word",new Missing());
 	    jtp.addTab("Short Answer", new Short());
 	    jtp.addTab("Matching", new matching());
-	    jtp.addTab("True-False", new True());
+	    jtp.addTab("True-False", new True(GiftBuilder));
 	    jtp.addTab("Essay", new Essay());
 	    jtp.addTab("Math", new Math());
 	    jtp.addTab("Numerical", new Num());

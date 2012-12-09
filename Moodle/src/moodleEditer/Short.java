@@ -24,19 +24,15 @@ import javax.swing.border.TitledBorder;
 
 public class Short extends JPanel {
 
-	private JPanel panel, panel_1, panel_2, panel_3;
+	private JPanel panel;
 	JScrollPane scrPane;
 	private JTextField textField;
-
-	private ArrayList<JLabel> labelList = new ArrayList<JLabel>();
-	private ArrayList<JTextField> fieldList = new ArrayList<JTextField>();
-	private ArrayList<JCheckBox> chkList = new ArrayList<JCheckBox>();
+	private ArrayList<Answer> allAns = new ArrayList<Answer>();
 	private String [] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 			 			 "N", "O","P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 	
 	int x=1;
 
-	
 	public Short() {
 
 		setLayout(new MigLayout("", "[right][grow][]", "[]10[150.00,top][40][50,grow][][40][40]"));
@@ -58,35 +54,22 @@ public class Short extends JPanel {
 		add(lblAnswer, "cell 0 3");
 		
 		panel = new JPanel();
-		panel.setLayout(new MigLayout("", "[Fill][grow][right]", "[grow,center]"));
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(171, 173, 179)), "", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel.setLayout(new MigLayout("", "[grow,fill]", "[grow,fill]"));
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(171, 173, 179)), "", 
+				TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		
 		scrPane = new JScrollPane(panel);
 		add(scrPane, "cell 1 3 2 1,grow");
-
-		panel_1 = new JPanel();		panel_1.setLayout(new GridLayout(x, 0, 0, 5));
-		panel_2 = new JPanel();		panel_2.setLayout(new GridLayout(x, 0, 0, 0));
-		panel_3 = new JPanel();		panel_3.setLayout(new GridLayout(x, 0, 0, 0));
 		
-		labelList.add(new JLabel(letters[x-1]));
-		fieldList.add(new JTextField());
-		chkList.add(new JCheckBox("Delete"));
-		
-		setAddAnswer(x);
-		
-		
-		panel.add(panel_1);
-		panel.add(panel_2, "growx,aligny top");
-		panel.add(panel_3);
 		
 		JButton button_3 = new JButton("Save to test file");
 		add(button_3, "cell 0 4,growx");
 		
-		JButton button = new JButton("Add Answer");
-		add(button, "cell 1 4");
+		JButton addBtn = new JButton("Add Answer");
+		add(addBtn, "cell 1 4");
 		
-		JButton button_1 = new JButton("Delete");
-		add(button_1, "cell 2 4");
+		JButton removeAnsBtn = new JButton("Delete");
+		add(removeAnsBtn, "cell 2 4");
 		
 		JButton button_2 = new JButton("Cancel/Clear");
 		button_2.setVerticalAlignment(SwingConstants.TOP);
@@ -96,67 +79,51 @@ public class Short extends JPanel {
 		JButton btnNewButton = new JButton("Add New Short Question");
 		add(btnNewButton, "cell 0 6 2 1,alignx left");
 		btnNewButton.setVisible(false);
-		
-		
-		button.addActionListener(new ActionListener() {
+				
+		addBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
+				Answer ans = new Answer();
+				ans.getLblName().setText(letters[x-1]);
+				allAns.add(ans);	
+				displayAns();
+				scrPane.revalidate();
 				x++;
-				labelList.add(new JLabel(letters[x-1]));
-				fieldList.add(new JTextField());
-				chkList.add(new JCheckBox("Delete"));
-				setAddAnswer(x);				
-				scrPane.revalidate();
 			}
 		});
-		button_1.addActionListener(new ActionListener() {
+		removeAnsBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				x--;
-				labelList.remove(x);
-				fieldList.remove(x);
-				chkList.remove(x);
-				setDelAnswer(x);				
+				int index = -1;	
+				for(Answer a: allAns ){
+					if(a.getCbName().isSelected())
+					{
+						index = allAns.indexOf(a);
+					}
+				}
+				allAns.remove(index);	
+				displayAns();
 				scrPane.revalidate();
 			}
-		});
-		
+		});	
 		setVisible(true);
 	}
 	
-	private void setAddAnswer(int i) {
+	protected void displayAns() {
 		
-		panel_1.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_2.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_3.setLayout(new GridLayout(i, 0, 0, 0));
-		
-		
-		for (int x = 0; x < i; x++) {
-			
-			panel_1.add(labelList.get(x));
-			panel_2.add(fieldList.get(x));
-			panel_3.add(chkList.get(x));
-			
+		panel.removeAll();
+		int i = 0;
+		for(Answer a: allAns ){
+			a.getLblName().setText(letters[i]);
+			i++;
 		}
-	}	
-	
-	private void setDelAnswer(int i) {
-			
-		panel_1.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_2.setLayout(new GridLayout(i, 0, 0, 0));
-		panel_3.setLayout(new GridLayout(i, 0, 0, 0));
-			
-			
-		for (int x = 0; x < i; x++) {
-			
-			panel_1.add(labelList.get(x));
-			panel_2.add(fieldList.get(x));
-			panel_3.add(chkList.get(x));
-				
-		}		
+		for(Answer a: allAns ){
+			panel.add(a,"wrap");
+		}
+		
 	}
 }
