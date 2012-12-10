@@ -92,8 +92,7 @@ public class True extends JPanel {
 				}else{
 					answer = "F";
 				}
-				String error = localBuilder.falseTrue(qt,qb,answer);
-				System.out.println(" "+error);
+				localBuilder.falseTrue(qt,qb,answer);
 			}
 		});
 		

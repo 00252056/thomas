@@ -29,7 +29,8 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 
 public class Missing extends JPanel {
-
+	
+	private GiftBuilder localBuilder;
 	private JPanel panel;
 	JScrollPane scrPane;
 	private JTextField textField;
@@ -42,8 +43,9 @@ public class Missing extends JPanel {
 	int x=1;
 
 	
-	public Missing() {
+	public Missing(GiftBuilder editor) {
 
+		this.localBuilder = editor;
 		setLayout(new MigLayout("", "[right][grow][]", "[]10[40.00,grow][40,grow][20][50,grow][][20][40]"));
 		
 		JLabel lblNewLabel = new JLabel("Question Title (optional) ");
@@ -133,26 +135,7 @@ public class Missing extends JPanel {
 			String qusetionTitle = textField.getText();
 			String qusetionQ =  taStart.getText();
 			String endQ = taClose.getText();
-			String middle = "_________";
 
-			try {
-				output = new PrintWriter(new BufferedWriter(new FileWriter(
-						"ExamTest.txt", true)));
-
-				output.append("::" + qusetionTitle + "::" + qusetionQ + " {");
-//				for (int x = 0; x < blankFields.size(); x++) {
-//					if(correctFields.get(x).isSelected()){
-//						blanksQuestion += (" =" + blankFields.get(x).getText());
-//					}else{
-//						blanksQuestion += (" ~" + blankFields.get(x).getText());
-//					}
-//				}
-//				blanksQuestion += ("} " + qEnd);
-				output.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				}
 			}
 		});
 		setVisible(true);
