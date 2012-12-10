@@ -43,9 +43,8 @@ public class Missing extends JPanel {
 	int x=1;
 
 	
-	public Missing(GiftBuilder editor) {
+	public Missing() {
 
-		this.localBuilder = editor;
 		setLayout(new MigLayout("", "[right][grow][]", "[]10[40.00,grow][40,grow][20][50,grow][][20][40]"));
 		
 		JLabel lblNewLabel = new JLabel("Question Title (optional) ");
